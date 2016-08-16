@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    var urlNumberGenerator = '@Url.Action("GetNumberSequence", "NumberGenerator")';
+</script>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div ng-controller="mainController">
+    <div class="jumbotron">
+        <div class="container">
+            <form name="userForm">
+            <div class="form-group" ng-class="{ 'has-error' : userForm.number.$invalid && !userForm.number.$pristine }">
+                <div class="input-group input-group-lg">
+                    <input ng-model="inputNumber" pattern="[0-9]{1,15}" maxlength="15" type="text" name="number" required class="form-control" placeholder="Enter whole number" />
+                    <p ng-show="userForm.number.$invalid && !userForm.number.$pristine" class="help-block">Enter a valid number.</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <button ng-disabled="userForm.$invalid" class="btn btn-primary btn-lgsm" href="#" role="button" ng-click="GenerateSequences()">Generate Number Sequences</button>
+                </div>
+            </div></form>
+            <p>User can enter a maximum of 15 digits. This is a number generator application. Click on each tab to view the series details</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div data-ng-init="init()">
+
+            <div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab1" data-toggle="tab">All Numbers </a>
+                        </li>
+                        <li>
+                            <a href="#tab2" data-toggle="tab">Odd Numbers </a>
+                        </li>
+                        <li>
+                            <a href="#tab3" data-toggle="tab">Even Numbers </a>
+                        </li>
+                        <li>
+                            <a href="#tab4" data-toggle="tab">CEZ Numbers </a>
+                        </li>
+                        <li>
+                            <a href="#tab5" data-toggle="tab">Fib Numbers </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content clearfix">
+                        <div id="tab1" class="tab-pane active" style="border: 1px solid black">
+                            <div class="well well-sm" style="margin: 10px;">
+                                <span id="" style="font-weight: bold;">Just Numbers</span>
+                            </div>
+                            <div class="number-container">{{AllNumbers}}</div>
+                        </div>
+                        <div id="tab2" class="tab-pane " style="border: 1px solid black">
+                            <div class="well well-sm" style="margin: 10px;">
+                                <span id="" style="font-weight: bold;">All Odd Numbers</span>
+                            </div>
+                            <div class="number-container">{{OddNumbers}}</div>
+                        </div>
+                        <div id="tab3" class="tab-pane " style="border: 1px solid black">
+                            <div class="well well-sm" style="margin: 10px;">
+                                <span id="" style="font-weight: bold;">All Even Numbers</span>
+                            </div>
+                            <div class="number-container">{{EvenNumbers}}</div>
+                        </div>
+                        <div id="tab4" class="tab-pane " style="border: 1px solid black">
+                            <div class="well well-sm" style="margin: 10px;">
+                                <span id="" style="font-weight: bold;">The CEZ List</span>
+                            </div>
+                            <div class="number-container">{{CEZNumbers}}</div>
+                        </div>
+                        <div id="tab5" class="tab-pane " style="border: 1px solid black">
+                            <div class="well well-sm" style="margin: 10px;">
+                                <span id="" style="font-weight: bold;">The Fibonaci series</span>
+                            </div>
+                            <div class="number-container">{{FibonaciNumbers}}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /container -->
