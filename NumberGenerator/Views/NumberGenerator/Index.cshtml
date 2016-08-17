@@ -15,7 +15,7 @@
             <div class="form-group" ng-class="{ 'has-error' : userForm.number.$invalid && !userForm.number.$pristine }">
                 <div class="input-group input-group-lg">
                     <input ng-model="inputNumber" pattern="[0-9]{1,15}" maxlength="15" type="text" name="number" required class="form-control" placeholder="Enter whole number" />
-                    <p ng-show="userForm.number.$invalid && !userForm.number.$pristine" class="help-block">Enter a valid number.</p>
+                    <p ng-show="userForm.number.$invalid && !userForm.number.$pristine" class="help-block">Please enter only whole numbers (positive integers). Decimal numbers are not allowed.</p>
                     <p ng-show="serverError.length>0" class="help-block" style="color:#a94442">{{serverError}}</p>
                 </div>
             </div>
