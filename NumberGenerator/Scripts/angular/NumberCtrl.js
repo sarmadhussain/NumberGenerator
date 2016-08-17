@@ -7,6 +7,7 @@ mainapp.controller('mainController', ['$scope', '$http', function ($scope, $http
     $scope.FibonaciNumbers = "0112358,13";
     $scope.ajax_request = null;
     $scope.inputNumber = 0;
+    $scope.serverError = "";
 
     $scope.GenerateSequences = function () {
         if ($scope.ajax_request && $scope.ajax_request.readyState != 4) {
@@ -14,6 +15,7 @@ mainapp.controller('mainController', ['$scope', '$http', function ($scope, $http
         }
                 
         // send ajax
+        $scope.serverError = "";
         $scope.ajax_request = $.ajax({
             url: urlNumberGenerator,
             type: 'POST',
@@ -24,19 +26,26 @@ mainapp.controller('mainController', ['$scope', '$http', function ($scope, $http
             success: function (result) {
                 // on successful operation
                 if (result.nvm && result.nvm != null) {
-                    $scope.AllNumbers = result.nvm.allNumbers.toString();
-                    $scope.EvenNumbers = result.nvm.evenNumbers.toString();
-                    $scope.OddNumbers = result.nvm.oddNumbers.toString();
-                    $scope.CEZNumbers = result.nvm.cezNumbers.toString();
-                    $scope.FibonaciNumbers = result.nvm.fibNumbers.toString();
-                    $scope.$apply();
+                    if (result.nvm.IsError) {
+                        $scope.serverError = result.nvm.ErrorMEssage;
+                    }
+                    else {
+                        $scope.AllNumbers = result.nvm.allNumbers.toString();
+                        $scope.EvenNumbers = result.nvm.evenNumbers.toString();
+                        $scope.OddNumbers = result.nvm.oddNumbers.toString();
+                        $scope.CEZNumbers = result.nvm.cezNumbers.toString();
+                        $scope.FibonaciNumbers = result.nvm.fibNumbers.toString();                        
+                    }
+                    //$scope.$apply();
                 }
             },
             error: function () {
-                // some internal error occurred
+                // some internal comms error occurred
+                $scope.serverError = "An error occurred while communicating with the server";
             },
             complete: function (xhr, status) {
                 // do some universal operation here
+                $scope.$apply();
             }
         });
     };
